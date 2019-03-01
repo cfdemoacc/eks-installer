@@ -93,7 +93,7 @@ data "aws_ami" "eks-worker" {
   }
 
   most_recent = true
-  owners      = ["602401143452"] # Amazon
+  owners      = ["Amazon Web Services"]
 }
 
 # EKS currently documents this required userdata for EKS worker nodes to

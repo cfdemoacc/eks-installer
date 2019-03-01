@@ -21,6 +21,9 @@ for VAR in ${REQUIRED_ENV_VARS[@]}; do
     fi
 done
 
+# remove integers
+export K8S_NAME=$(printf '%s' "$K8S_NAME" | tr -d '0123456789')
+
 echo "Checking if cluster \"$K8S_NAME\" already exists..."
 EXISTING_CLUSTER_ID=$(curl -s \
     -H "x-access-token: $CF_API_KEY" \

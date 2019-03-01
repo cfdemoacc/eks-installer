@@ -86,16 +86,6 @@ resource "aws_security_group_rule" "demo-node-ingress-cluster" {
   type                     = "ingress"
 }
 
-data "aws_ami" "eks-worker" {
-  filter {
-    name   = "name"
-    values = ["Amazon ECS-Optimized Amazon Linux 2 AMI (ARM)"]
-  }
-
-  most_recent = true
-  owners      = ["Amazon Web Services"]
-}
-
 # EKS currently documents this required userdata for EKS worker nodes to
 # properly configure Kubernetes applications on the EC2 instance.
 # We utilize a Terraform local here to simplify Base64 encoding this
@@ -129,7 +119,7 @@ USERDATA
 resource "aws_launch_configuration" "demo" {
   associate_public_ip_address = true
   iam_instance_profile        = "${aws_iam_instance_profile.demo-node.name}"
-  image_id                    = "${data.aws_ami.eks-worker.id}"
+  image_id                    = "ami-053b2a8c2f3e87928"
   instance_type               = "${var.cluster-instance-type}"
   name_prefix                 = "${var.cluster-name}"
   security_groups             = ["${aws_security_group.demo-node.id}"]
